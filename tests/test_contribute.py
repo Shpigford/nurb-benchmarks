@@ -44,16 +44,47 @@ def test_most_needed_ranks_empty_rows_first(tmp_path):
 
     book = {
         "claude": [
-            {"id": "claude-opus-5", "label": "Opus", "efforts": ["high"], "default_effort": "high"},
-            {"id": "claude-sonnet-5", "label": "Sonnet", "efforts": ["high"], "default_effort": "high"},
+            {"id": "claude-opus-5", "label": "Opus", "efforts": ["low", "high"], "default_effort": "high"},
+            {"id": "claude-sonnet-5", "label": "Sonnet", "efforts": ["low", "high"], "default_effort": "high"},
         ],
         "codex": [{"id": "gpt", "label": "GPT", "efforts": ["medium"], "default_effort": "medium"}],
     }
-    # sonnet has no rows yet; codex is not installed, so its empty row cannot win
-    assert contribute.most_needed(book, counts, ["claude"])[1]["id"] == "claude-sonnet-5"
-    # ties fall to menu order, which lists flagships first
-    assert contribute.most_needed(book, {}, ["claude"])[1]["id"] == "claude-opus-5"
+    # opus high has rows; opus low does not, and low is not the default. The hole
+    # is the empty effort, not the next model's default.
+    name, entry, effort, count = contribute.most_needed(book, counts, ["claude"])
+    assert (name, entry["id"], effort, count) == ("claude", "claude-opus-5", "low", 0)
+    # an uninstalled harness cannot win even if every one of its cells is empty
+    assert contribute.most_needed(book, counts, ["claude"])[0] == "claude"
+    # ties fall to menu order, then listed effort order
+    name, entry, effort, count = contribute.most_needed(book, {}, ["claude"])
+    assert (entry["id"], effort, count) == ("claude-opus-5", "low", 0)
     assert contribute.most_needed(book, counts, []) is None
+
+
+def test_most_needed_picks_a_thin_non_default_over_a_thicker_default():
+    """The live-board bug: haiku high and sonnet low sit at 12 trials, sol's
+    default (low) sits at 18, and ranking only default effort recommended sol."""
+    book = {
+        "claude": [
+            {"id": "claude-sonnet-5", "label": "Sonnet", "efforts": ["low", "high"], "default_effort": "high"},
+            {"id": "claude-haiku-4-5", "label": "Haiku", "efforts": ["low", "high"], "default_effort": "low"},
+        ],
+        "codex": [
+            {"id": "gpt-5.6-sol", "label": "Sol", "efforts": ["low", "high"], "default_effort": "low"},
+        ],
+    }
+    counts = {
+        ("claude", "claude-sonnet-5", "low"): 12,
+        ("claude", "claude-sonnet-5", "high"): 30,
+        ("claude", "claude-haiku-4-5", "low"): 33,
+        ("claude", "claude-haiku-4-5", "high"): 12,
+        ("codex", "gpt-5.6-sol", "low"): 18,
+        ("codex", "gpt-5.6-sol", "high"): 30,
+    }
+    name, entry, effort, count = contribute.most_needed(
+        book, counts, ["claude", "codex"]
+    )
+    assert (name, entry["id"], effort, count) == ("claude", "claude-sonnet-5", "low", 12)
 
 
 def test_wizard_offers_the_most_needed_pick(tmp_path, monkeypatch, capsys):
@@ -94,6 +125,50 @@ def test_wizard_offers_the_most_needed_pick(tmp_path, monkeypatch, capsys):
     sub = next((root / "submissions").glob("stub-stub-model-low-*"))
     row = json.loads((sub / "results.jsonl").read_text().splitlines()[0])
     assert (row["model"], row["effort"]) == ("stub-model", "low")
+
+
+def test_wizard_runs_the_thinner_effort_not_the_default(tmp_path, monkeypatch, capsys):
+    """Default effort is not a filter: if low already has trials and high does
+    not, the most-needed pick is high, and accepting it actually runs high."""
+    root = tmp_path / "evals"
+    (root / "tasks").mkdir(parents=True)
+    real = contribute.EVALS
+    os.symlink(real / "tasks" / "cable_clip", root / "tasks" / "cable_clip")
+    (root / "models.toml").write_text(
+        '[[stub]]\nid = "stub-model"\nlabel = "Stub Model"\n'
+        'efforts = ["low", "high"]\ndefault_effort = "low"\n'
+    )
+    seeded = root / "submissions" / "stub-stub-model-low-seeded"
+    seeded.mkdir(parents=True)
+    (seeded / "results.jsonl").write_text(
+        json.dumps({"harness": "stub", "model": "stub-model", "effort": "low"}) + "\n"
+    )
+
+    monkeypatch.setattr(contribute, "EVALS", root)
+    which = contribute.shutil.which
+    monkeypatch.setattr(
+        contribute.shutil,
+        "which",
+        lambda name: "/usr/bin/true" if name == "stub" else which(name),
+    )
+    monkeypatch.setitem(harnesses.HARNESSES, "stub", Stub(GOOD))
+    monkeypatch.setattr(contribute, "detected", lambda: [("stub", "1.0")])
+    monkeypatch.setattr(sys.stdin, "isatty", lambda: True)
+    answers = iter(["1", "1"])  # the most-needed pick; then one round
+    monkeypatch.setattr("builtins.input", lambda prompt="": next(answers))
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["contribute", "--tasks", "cable_clip", "--seed", str(SEED), "--pr", "no"],
+    )
+    contribute.main()
+
+    printed = capsys.readouterr().out
+    assert "at high effort" in printed
+    assert "no runs on the board yet" in printed
+    sub = next((root / "submissions").glob("stub-stub-model-high-*"))
+    row = json.loads((sub / "results.jsonl").read_text().splitlines()[0])
+    assert (row["model"], row["effort"]) == ("stub-model", "high")
 
 
 def test_sanitize_scrubs_longest_first(tmp_path):
