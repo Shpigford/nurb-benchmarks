@@ -380,28 +380,16 @@ wheels = [
 [[package]]
 name = "nurb"
 version = "0.23.0"
-source = { editable = "../" }
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "build123d" },
     { name = "trimesh" },
     { name = "watchdog" },
     { name = "websockets" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "build123d", specifier = ">=0.11.1" },
-    { name = "playwright", marker = "extra == 'render'", specifier = ">=1.49" },
-    { name = "trimesh", specifier = ">=4.12.2" },
-    { name = "watchdog", specifier = ">=6.0.0" },
-    { name = "websockets", specifier = ">=16.1.1" },
-]
-provides-extras = ["render"]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "pytest", specifier = ">=8.0" },
-    { name = "pytest-xdist", specifier = ">=3.8.0" },
+sdist = { url = "https://files.pythonhosted.org/packages/60/f0/2b9058daed144032fba40eae501d5c83b741e108ac3c4ae881fb9069fa53/nurb-0.23.0.tar.gz", hash = "sha256:c0ee165a51fc255c446a66bee24b358eadc9aa5742bdc4922a5d6af795b5ee8e", size = 528966, upload-time = "2026-08-26T00:11:53.191Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/96/da/e03ce7b32d7b50e6bdbbb57c8247c958b86568408dc1c9da562cec1bb88a/nurb-0.23.0-py3-none-any.whl", hash = "sha256:e38a7de77fac970cd0726f94aa4323fde00ac4982e527b7ed6ff5caaf2651ee2", size = 545784, upload-time = "2026-08-26T00:11:51.643Z" },
 ]
 
 [[package]]
@@ -424,7 +412,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "networkx", specifier = ">=3" },
-    { name = "nurb", editable = "../" },
+    { name = "nurb", specifier = ">=0.23" },
     { name = "rtree", specifier = ">=1" },
     { name = "shapely", specifier = ">=2" },
 ]

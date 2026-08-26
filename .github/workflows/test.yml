@@ -1,0 +1,55 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The grading tests guard the scorer, and the scorer only changes when its
+      # code, a task, or the locked nurb engine changes. Submission PRs, verdict
+      # edits (site.py is covered by test_report), and leaderboard regenerations
+      # are data-only and get the cheap validation tests instead.
+      - uses: dorny/paths-filter@v3
+        id: changed
+        with:
+          filters: |
+            scorer:
+              - 'tasks/**'
+              - 'tests/**'
+              - 'pyproject.toml'
+              - 'uv.lock'
+
+      # The src-minus-site.py test needs its own step: a negation pattern only
+      # works under the `every` quantifier, and under the default `some` it
+      # matches every file in the repo, which would run the full suite on every
+      # PR. `every` in turn would break the plain list above, since no file can
+      # match two different globs at once.
+      - uses: dorny/paths-filter@v3
+        id: scorer_src
+        with:
+          predicate-quantifier: every
+          filters: |
+            code:
+              - 'src/**'
+              - '!src/nurb_evals/site.py'
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - run: uv sync --locked --dev
+
+      # Every grade() builds parts in its own subprocess and temp dir, so the suite
+      # parallelizes cleanly. loadscope keeps each module's expensive module-scoped
+      # grades fixture on one worker instead of rebuilding it per worker.
+      - if: steps.changed.outputs.scorer == 'true' || steps.scorer_src.outputs.code == 'true'
+        run: uv run pytest -q -n auto --dist loadscope
+
+      - if: steps.changed.outputs.scorer != 'true' && steps.scorer_src.outputs.code != 'true'
+        run: uv run pytest -q tests/test_report.py tests/test_pricing.py tests/test_contribute.py

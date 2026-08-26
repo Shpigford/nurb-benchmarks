@@ -92,6 +92,8 @@ def benchmark_identity(task_dir):
 
     lock = pathlib.Path(__file__).parents[2] / "uv.lock"
     if lock.is_file():
+        # The label predates the split out of the nurb repo; it stays so the
+        # digest stream reads the same way across revisions.
         digest.update(b"evals/uv.lock\0")
         digest.update(lock.read_bytes())
     return {**versions, "benchmark_revision": digest.hexdigest()[:12]}

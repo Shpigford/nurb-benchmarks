@@ -13,6 +13,7 @@ that remain. Every question has a flag, so an agent can run it non-interactively
 import argparse
 import concurrent.futures
 import getpass
+import gzip
 import json
 import os
 import pathlib
@@ -173,7 +174,10 @@ def stage_submission(out, label, task, n):
     (dst / "project" / "parts").mkdir(parents=True, exist_ok=True)
     pairs = replacements(src / "project")
     transcript = (src / "transcript.txt").read_text(encoding="utf-8", errors="replace")
-    (dst / "transcript.txt").write_text(sanitize(transcript, pairs), encoding="utf-8")
+    # Transcripts are nearly all of the repo's weight and compress about 4x; mtime=0
+    # keeps the bytes deterministic so re-staging a trial never shows a spurious diff.
+    with gzip.GzipFile(dst / "transcript.txt.gz", "wb", compresslevel=9, mtime=0) as zipped:
+        zipped.write(sanitize(transcript, pairs).encode("utf-8"))
     for source in sorted((src / "project" / "parts").glob("*.py")):
         text = source.read_text(encoding="utf-8", errors="replace")
         (dst / "project" / "parts" / source.name).write_text(
@@ -438,11 +442,13 @@ def main():
     (sub / "results.jsonl").write_text(sanitize(rows_text, pairs), encoding="utf-8")
 
     leak = re.compile(re.escape(str(pathlib.Path.home())) + r"|" + re.escape(getpass.getuser()))
-    dirty = [
-        p
-        for p in sub.rglob("*")
-        if p.is_file() and leak.search(p.read_text(encoding="utf-8", errors="replace"))
-    ]
+
+    def staged_text(path):
+        if path.suffix == ".gz":
+            return gzip.decompress(path.read_bytes()).decode("utf-8", "replace")
+        return path.read_text(encoding="utf-8", errors="replace")
+
+    dirty = [p for p in sub.rglob("*") if p.is_file() and leak.search(staged_text(p))]
     if dirty:
         sys.exit(f"sanitizer missed something in {dirty[0]}; please open an issue instead of a PR")
 
@@ -450,7 +456,7 @@ def main():
     # shared touched. REPORT.md and the page regenerate on main after merge (the
     # leaderboard workflow), so any number of open submission PRs merge in any
     # order without a conflict.
-    repo = EVALS.parent
+    repo = EVALS
     print(f"\n{style('Done.', GREEN, BOLD)} Staged in this checkout ({repo}):\n  {sub}\n")
 
     # Handing a contributor five git commands is where two dogfooding runs died
@@ -511,7 +517,7 @@ def open_pr(run_name, repo):
     if done.returncode != 0:
         return None, f"git checkout: {_tail(done)}"
 
-    _run(["git", "add", f"evals/submissions/{run_name}"], repo)
+    _run(["git", "add", f"submissions/{run_name}"], repo)
     done = _run(["git", "commit", "-m", f"benchmark run: {run_name}"], repo)
     if done.returncode != 0:
         return None, f"git commit: {_tail(done)}"
@@ -535,7 +541,7 @@ def open_pr(run_name, repo):
     done = _run(
         [
             "gh", "pr", "create",
-            "--repo", "Shpigford/nurb",
+            "--repo", "Shpigford/nurb-benchmarks",
             "--base", "main",
             "--head", head,
             "--title", f"benchmark run: {run_name}",
@@ -555,11 +561,11 @@ def _manual_steps(run_name, repo):
     print(
         f"\nFrom {repo}:\n"
         f"  git checkout -b bench-{run_name}\n"
-        f"  git add evals/submissions/{run_name}\n"
+        f"  git add submissions/{run_name}\n"
         f"  git commit -m 'benchmark run: {run_name}'\n"
-        f"  gh repo fork Shpigford/nurb --remote   # skip if you have push access\n"
+        f"  gh repo fork Shpigford/nurb-benchmarks --remote   # skip if you have push access\n"
         f"  git push -u origin bench-{run_name}\n"
-        f"  gh pr create --repo Shpigford/nurb --base main --head bench-{run_name} --title 'benchmark run: {run_name}' --fill\n\n"
+        f"  gh pr create --repo Shpigford/nurb-benchmarks --base main --head bench-{run_name} --title 'benchmark run: {run_name}' --fill\n\n"
         f"Every run counts, including a single one: matching rows pool on the "
         f"leaderboard, and a bad score is data, not an embarrassment."
     )

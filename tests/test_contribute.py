@@ -7,6 +7,7 @@ paths redirected into a scratch tree so nothing touches the real submissions/.
 """
 
 import concurrent.futures
+import gzip
 import json
 import os
 import pathlib
@@ -161,10 +162,15 @@ def test_wizard_runs_and_stages_a_sanitized_submission(tmp_path, monkeypatch, ca
     assert rows[0]["model"] == "stub-model" and rows[0]["effort"] == "low"
     part = sub / "cable_clip" / "trial_1" / "project" / "parts" / "cable_clip.py"
     assert part.is_file()
-    assert (sub / "cable_clip" / "trial_1" / "transcript.txt").exists()
+    assert (sub / "cable_clip" / "trial_1" / "transcript.txt.gz").exists()
     for staged in sub.rglob("*"):
         if staged.is_file():
-            assert str(pathlib.Path.home()) not in staged.read_text(errors="replace")
+            text = (
+                gzip.decompress(staged.read_bytes()).decode("utf-8", "replace")
+                if staged.suffix == ".gz"
+                else staged.read_text(errors="replace")
+            )
+            assert str(pathlib.Path.home()) not in text
 
     printed = capsys.readouterr().out
     # The last line on screen always carries the run's progress, so a person
@@ -173,7 +179,7 @@ def test_wizard_runs_and_stages_a_sanitized_submission(tmp_path, monkeypatch, ca
     assert "██████████████████ 1/1" in printed
     assert "Staged in this checkout" in printed and str(root) in printed
     assert f"benchmark run: {sub.name}" in printed
-    assert f"git add evals/submissions/{sub.name}" in printed
+    assert f"git add submissions/{sub.name}" in printed
     assert "skip if you have push access" in printed
 
 
@@ -289,7 +295,7 @@ def test_wizard_runs_trials_in_parallel(tmp_path, monkeypatch):
     rows = [json.loads(line) for line in (sub / "results.jsonl").read_text().splitlines() if line.strip()]
     assert sorted(r["trial"] for r in rows) == [1, 2, 3, 4]
     for n in (1, 2, 3, 4):
-        assert (sub / "cable_clip" / f"trial_{n}" / "transcript.txt").is_file()
+        assert (sub / "cable_clip" / f"trial_{n}" / "transcript.txt.gz").is_file()
 
 
 def test_trial_failure_cancels_an_earlier_slow_future():
@@ -330,7 +336,7 @@ def test_open_pr_drives_git_and_gh_end_to_end(tmp_path, monkeypatch):
     )
     (bin_dir / "gh").write_text(
         '#!/bin/sh\necho "gh $@" >> %s\n'
-        'case "$1 $2" in "pr create") echo "https://github.com/Shpigford/nurb/pull/999";; esac\nexit 0\n' % log,
+        'case "$1 $2" in "pr create") echo "https://github.com/Shpigford/nurb-benchmarks/pull/999";; esac\nexit 0\n' % log,
         encoding="utf-8",
     )
     for f in bin_dir.iterdir():
@@ -339,14 +345,14 @@ def test_open_pr_drives_git_and_gh_end_to_end(tmp_path, monkeypatch):
 
     url, problem = contribute.open_pr("stub-stub-model-low-abc123", tmp_path)
     assert problem is None
-    assert url == "https://github.com/Shpigford/nurb/pull/999"
+    assert url == "https://github.com/Shpigford/nurb-benchmarks/pull/999"
     logged = log.read_text(encoding="utf-8")
     for needle in (
         "git fetch origin main",
         "git checkout -b bench-stub-stub-model-low-abc123 FETCH_HEAD",
-        "git add evals/submissions/stub-stub-model-low-abc123",
+        "git add submissions/stub-stub-model-low-abc123",
         "git commit -m benchmark run: stub-stub-model-low-abc123",
         "git push -u origin bench-stub-stub-model-low-abc123",
-        "gh pr create --repo Shpigford/nurb --base main --head bench-stub-stub-model-low-abc123 --title benchmark run: stub-stub-model-low-abc123",
+        "gh pr create --repo Shpigford/nurb-benchmarks --base main --head bench-stub-stub-model-low-abc123 --title benchmark run: stub-stub-model-low-abc123",
     ):
         assert needle in logged

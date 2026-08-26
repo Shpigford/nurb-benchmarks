@@ -1,5 +1,6 @@
 """The report is arithmetic over rows; every column has to be checkable by hand."""
 
+import gzip
 import json
 import re
 import pathlib
@@ -128,7 +129,7 @@ def test_committed_submission_artifacts_are_complete_and_sanitized():
             assert row["nurb_version"] and row["benchmark_version"]
             assert len(row["benchmark_revision"]) == 12
             transcript = (
-                result_file.parent / row["task"] / f"trial_{row['trial']}" / "transcript.txt"
+                result_file.parent / row["task"] / f"trial_{row['trial']}" / "transcript.txt.gz"
             )
             source = (
                 result_file.parent / row["task"] / f"trial_{row['trial']}"
@@ -136,7 +137,10 @@ def test_committed_submission_artifacts_are_complete_and_sanitized():
             )
             assert source.is_file() and source.read_text(encoding="utf-8").strip()
             for artifact in (transcript, source):
-                text = artifact.read_text(encoding="utf-8")
+                if artifact.suffix == ".gz":
+                    text = gzip.decompress(artifact.read_bytes()).decode("utf-8")
+                else:
+                    text = artifact.read_text(encoding="utf-8")
                 for arr in re.findall(r'"output":\[([0-9,]+)\]', text):
                     text += bytes(int(b) for b in arr.split(",")).decode("utf-8", "replace")
                 assert "/Users/" not in text and "/home/" not in text

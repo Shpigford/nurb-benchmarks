@@ -17,7 +17,6 @@ import pathlib
 
 from .report import PASS, pass_at, rows_from, summarize
 
-SITE = pathlib.Path(__file__).parents[3] / "site" / "benchmarks.html"
 SUBMISSIONS = pathlib.Path(__file__).parents[2] / "submissions"
 
 # What each benchmark job measures, in the words of the person printing the part.
@@ -352,14 +351,14 @@ HEAD = """\
 
 <p class="fine">$/part is what the same tokens would cost at API list prices; on a subscription it comes out of your plan.</p>
 <p class="fine">Early days: {trial_count} graded parts across {job_count} jobs so far. Each bar averages every attempt on file, and the ticks are the attempts themselves.</p>
-<p class="fine">Grading is a fixed rubric measured on the part's actual geometry, so the only randomness is the model's. Raw results, full transcripts, and the grading code are <a href="https://github.com/Shpigford/nurb/blob/main/evals/REPORT.md">on GitHub</a>.</p>
+<p class="fine">Grading is a fixed rubric measured on the part's actual geometry, so the only randomness is the model's. Raw results, full transcripts, and the grading code are <a href="https://github.com/Shpigford/nurb-benchmarks/blob/main/REPORT.md">on GitHub</a>.</p>
 </main>
 <footer>
   <div class="wrap">
     <span>&copy; 2026 Ordinary Systems LLC</span>
     <a href="https://github.com/Shpigford/nurb/blob/main/LICENSE">FSL-1.1-MIT</a>
     <span class="spacer"></span>
-    <a href="https://github.com/Shpigford/nurb/blob/main/evals/REPORT.md">full results</a>
+    <a href="https://github.com/Shpigford/nurb-benchmarks/blob/main/REPORT.md">full results</a>
     <a href="/changelog">changelog</a>
     <a href="https://github.com/Shpigford/nurb">github</a>
     <a href="https://x.com/Shpigford">@shpigford</a>
@@ -947,9 +946,13 @@ def render(summary):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="render site/benchmarks.html from submissions")
-    ap.add_argument("results", nargs="*", help="results dirs; defaults to evals/submissions/*")
-    ap.add_argument("--out", default=str(SITE))
+    ap = argparse.ArgumentParser(description="render the benchmarks page from submissions")
+    ap.add_argument("results", nargs="*", help="results dirs; defaults to submissions/*")
+    ap.add_argument(
+        "--out",
+        required=True,
+        help="where the page goes, normally <nurb checkout>/site/benchmarks.html",
+    )
     args = ap.parse_args()
     paths = args.results or sorted(
         str(p) for p in SUBMISSIONS.iterdir() if (p / "results.jsonl").is_file()

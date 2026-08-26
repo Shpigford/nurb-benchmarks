@@ -5,16 +5,15 @@ description = "The nurb LLM benchmark: score models designing 3D-printable parts
 requires-python = ">=3.13"
 # shapely/networkx/rtree are trimesh's optional path-handling stack, used by the
 # function tasks' retention checks (mesh cross-sections to 2D polygons).
-dependencies = ["nurb", "shapely>=2", "networkx>=3", "rtree>=1"]
+# nurb comes from PyPI: the benchmark grades the shipped package, and the lockfile
+# pins the exact version so every contributor runs the same engine.
+dependencies = ["nurb>=0.23", "shapely>=2", "networkx>=3", "rtree>=1"]
 
 [dependency-groups]
 dev = [
     "pytest>=8",
     "pytest-xdist>=3.8.0",
 ]
-
-[tool.uv.sources]
-nurb = { path = "..", editable = true }
 
 [build-system]
 requires = ["hatchling"]
