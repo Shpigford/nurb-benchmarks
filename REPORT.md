@@ -19,6 +19,7 @@ Generated from the committed submissions by `python -m nurb_evals.report --write
 | codex 0.149.1 | 0.22.2/0.1.0@e8f4e93e23fd | gpt-5.6-sol | low | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 581,085 | $2.40 | 158s | 1.000 / 1.000 / 1.000 |
 | codex 0.149.0 | 0.22.2/0.1.0@e8f4e93e23fd | gpt-5.6-sol | medium | 5 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 424,634 | $1.80 | 208s | 1.000 / 1.000 / 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@e8f4e93e23fd | grok-4.6 | low | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 72,679 | $0.06 | 109s | 1.000 / 1.000 / 1.000 |
+| grok 1.0.5 | 0.23.0/0.1.0@5d7716fa32f6 | grok-4.6 | low | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 71,538 | $0.05 | 89s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@e8f4e93e23fd | grok-4.6 | medium | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 214,450 | $0.19 | 432s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@e8f4e93e23fd | grok-4.6 | xhigh | 6 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 330,294 | $0.24 | 554s | 1.000 / 1.000 / 1.000 / 1.000 / 1.000 / 1.000 |
 | codex 0.149.0 | 0.22.2/0.1.0@e8f4e93e23fd | gpt-5.6-terra | high | 5 | 0.973 | 1.00 | 1.00 | 1.00 | 0.87 | 0.80 | 1.00 | 232,031 | $0.52 | 142s | 0.867 / 1.000 / 1.000 / 1.000 / 1.000 |
@@ -26,12 +27,14 @@ Generated from the committed submissions by `python -m nurb_evals.report --write
 | codex 0.149.0 | 0.22.2/0.1.0@e8f4e93e23fd | gpt-5.6-luna | xhigh | 5 | 0.947 | 1.00 | 1.00 | 1.00 | 0.73 | 0.60 | 1.00 | 493,491 | $0.11 | 215s | 0.867 / 1.000 / 0.867 / 1.000 / 1.000 |
 | codex 0.149.0 | 0.22.2/0.1.0@e8f4e93e23fd | gpt-5.6-terra | medium | 5 | 0.947 | 1.00 | 1.00 | 1.00 | 0.73 | 0.60 | 1.00 | 346,169 | $0.75 | 153s | 0.867 / 0.867 / 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@e8f4e93e23fd | grok-4.6 | high | 3 | 0.917 | 1.00 | 1.00 | 0.97 | 0.67 | 0.67 | 1.00 | 287,735 | $0.26 | 694s | 1.000 / 1.000 / 0.750 |
+| grok 1.0.5 | 0.23.0/0.1.0@5d7716fa32f6 | grok-4.6 | medium | 3 | 0.917 | 1.00 | 1.00 | 0.97 | 0.67 | 0.67 | 1.00 | 205,711 | $0.16 | 343s | 1.000 / 1.000 / 0.750 |
 | codex 0.149.1 | 0.22.2/0.1.0@e8f4e93e23fd | gpt-5.6-terra | medium | 3 | 0.892 | 1.00 | 0.92 | 0.97 | 0.67 | 0.67 | 1.00 | 870,393 | $1.83 | 258s | 1.000 / 1.000 / 0.675 |
 | codex 0.149.0 | 0.22.2/0.1.0@e8f4e93e23fd | gpt-5.6-luna | high | 5 | 0.843 | 1.00 | 1.00 | 0.98 | 0.27 | 0.00 | 0.00 | 480,207 | $0.11 | 222s | 0.867 / 0.867 / 0.867 / 0.867 / 0.750 |
 | claude 2.1.241 | 0.22.2/0.1.0@e60a6422d46a | claude-haiku-4-5 | high | 3 | 0.806 | 1.00 | 1.00 | 0.83 | 0.44 | 0.33 | 1.00 | 30,793 | $0.49 | 488s | 0.867 / 0.550 / 1.000 |
 | codex 0.149.1 | 0.22.2/0.1.0@e8f4e93e23fd | gpt-5.6-terra | low | 3 | 0.775 | 1.00 | 0.92 | 0.87 | 0.33 | 0.33 | 1.00 | 399,731 | $0.84 | 131s | 0.625 / 1.000 / 0.700 |
 | codex 0.149.1 | 0.22.2/0.1.0@e8f4e93e23fd | gpt-5.6-luna | low | 3 | 0.681 | 1.00 | 0.92 | 0.77 | 0.11 | 0.00 | 0.00 | 365,642 | $0.08 | 150s | 0.500 / 0.867 / 0.675 |
 | claude 2.1.241 | 0.22.2/0.1.0@e60a6422d46a | claude-haiku-4-5 | low | 3 | 0.639 | 1.00 | 1.00 | 0.63 | 0.11 | 0.00 | 0.00 | 21,255 | $0.39 | 391s | 0.500 / 0.867 / 0.550 |
+| claude 2.1.246 | 0.23.0/0.1.0@5d7716fa32f6 | claude-haiku-4-5 | low | 3 | 0.600 | 1.00 | 1.00 | 0.60 | 0.00 | 0.00 | 0.00 | 28,001 | $0.44 | 412s | 0.550 / 0.550 / 0.700 |
 
 `benchmark` is nurb/evals@content-revision and separates rows whenever the tool, task, scorer, harness adapter, or locked dependencies change. `score` averages all trials with gate failures as zeros; `built` is the fraction of trials past the gate, and lint/dims/flex average built trials only. A pass is a score of at least 0.99. Stage columns overlap by design: a part wrong at the stated size is wrong at every probed size too, so it loses dims and flex together. `tokens` is input plus output as the harness reports them, and harnesses count differently (claude's input excludes cache reads, codex counts full per-turn context), so compare tokens within a harness only. `cost` is the API-equivalent dollar cost of a trial at list prices, the mean across trials: subscription runs paid no invoice, so this is what the same tokens would have cost through the API. claude rows carry the CLI's own cache-aware figure; other harnesses derive from their token counts and the dated prices.toml, which folds any cached tokens in at the full input rate and so reads slightly high.
 
@@ -48,6 +51,8 @@ Generated from the committed submissions by `python -m nurb_evals.report --write
 | codex 0.149.0 | 0.22.2/0.1.0@c16e77e91b9a | gpt-5.6-sol | high | 5 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 593,633 | $2.53 | 331s | 1.000 / 1.000 / 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@c16e77e91b9a | grok-4.6 | high | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 323,019 | $0.35 | 985s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.4 | 0.19.2/0.1.0@9620846dd1cf | grok-4.6 | high | 1 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 217,583 | $0.32 | 869s | 1.000 |
+| grok 1.0.5 | 0.23.0/0.1.0@396cc49ef106 | grok-4.6 | low | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 228,316 | $0.16 | 271s | 1.000 / 1.000 / 1.000 |
+| grok 1.0.5 | 0.23.0/0.1.0@396cc49ef106 | grok-4.6 | medium | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 256,051 | $0.29 | 718s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@c16e77e91b9a | grok-4.6 | medium | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 210,421 | $0.27 | 695s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@c16e77e91b9a | grok-4.6 | xhigh | 6 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 388,953 | $0.37 | 1030s | 1.000 / 1.000 / 1.000 / 1.000 / 1.000 / 1.000 |
 | claude 2.1.245 | 0.22.2/0.1.0@c16e77e91b9a | claude-sonnet-5 | high | 3 | 0.978 | 1.00 | 1.00 | 0.96 | 1.00 | 0.33 | 1.00 | 119,485 | $3.34 | 1695s | 0.967 / 0.967 / 1.000 |
@@ -66,6 +71,7 @@ Generated from the committed submissions by `python -m nurb_evals.report --write
 | claude 2.1.220 | 0.10.0/0.1.0@f65a02da4de4 | claude-sonnet-5 | low | 1 | 0.567 | 1.00 | 1.00 | 0.53 | 0.00 | 0.00 | 0.00 | 53,090 | $2.09 | 722s | 0.567 |
 | claude 2.1.220 | 0.10.0/0.1.0@f65a02da4de4 | claude-haiku-4-5 | high | 1 | 0.467 | 1.00 | 1.00 | 0.33 | 0.00 | 0.00 | 0.00 | 23,169 | $0.36 | 345s | 0.467 |
 | claude 2.1.220 | 0.10.0/0.1.0@f65a02da4de4 | claude-haiku-4-5 | low | 2 | 0.429 | 1.00 | 0.88 | 0.33 | 0.00 | 0.00 | 0.00 | 34,398 | $0.53 | 498s | 0.467 / 0.392 |
+| claude 2.1.246 | 0.23.0/0.1.0@396cc49ef106 | claude-haiku-4-5 | low | 3 | 0.339 | 1.00 | 0.50 | 0.38 | 0.00 | 0.00 | 0.00 | 36,556 | $0.62 | 563s | 0.467 / 0.300 / 0.250 |
 
 `benchmark` is nurb/evals@content-revision and separates rows whenever the tool, task, scorer, harness adapter, or locked dependencies change. `score` averages all trials with gate failures as zeros; `built` is the fraction of trials past the gate, and lint/dims/flex average built trials only. A pass is a score of at least 0.99. Stage columns overlap by design: a part wrong at the stated size is wrong at every probed size too, so it loses dims and flex together. `tokens` is input plus output as the harness reports them, and harnesses count differently (claude's input excludes cache reads, codex counts full per-turn context), so compare tokens within a harness only. `cost` is the API-equivalent dollar cost of a trial at list prices, the mean across trials: subscription runs paid no invoice, so this is what the same tokens would have cost through the API. claude rows carry the CLI's own cache-aware figure; other harnesses derive from their token counts and the dated prices.toml, which folds any cached tokens in at the full input rate and so reads slightly high.
 
@@ -94,10 +100,13 @@ Generated from the committed submissions by `python -m nurb_evals.report --write
 | grok 1.0.5 | 0.22.2/0.1.0@13435a35f451 | grok-4.6 | high | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 193,531 | $0.17 | 431s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.4 | 0.19.2/0.1.0@62d2e9d68448 | grok-4.6 | high | 1 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 201,616 | $0.17 | 622s | 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@13435a35f451 | grok-4.6 | low | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 105,605 | $0.07 | 100s | 1.000 / 1.000 / 1.000 |
+| grok 1.0.5 | 0.23.0/0.1.0@eeb6f271d406 | grok-4.6 | low | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 89,349 | $0.06 | 102s | 1.000 / 1.000 / 1.000 |
+| grok 1.0.5 | 0.23.0/0.1.0@eeb6f271d406 | grok-4.6 | medium | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 235,295 | $0.17 | 371s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@13435a35f451 | grok-4.6 | medium | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 161,880 | $0.13 | 316s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@13435a35f451 | grok-4.6 | xhigh | 6 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 220,877 | $0.21 | 574s | 1.000 / 1.000 / 1.000 / 1.000 / 1.000 / 1.000 |
 | codex 0.149.0 | 0.22.2/0.1.0@13435a35f451 | gpt-5.6-terra | high | 5 | 0.949 | 1.00 | 1.00 | 0.98 | 0.80 | 0.80 | 1.00 | 265,876 | $0.58 | 122s | 1.000 / 0.745 / 1.000 / 1.000 / 1.000 |
 | codex 0.149.1 | 0.22.2/0.1.0@13435a35f451 | gpt-5.6-luna | low | 3 | 0.915 | 1.00 | 1.00 | 0.96 | 0.67 | 0.67 | 1.00 | 209,886 | $0.04 | 96s | 1.000 / 0.745 / 1.000 |
+| claude 2.1.246 | 0.23.0/0.1.0@eeb6f271d406 | claude-haiku-4-5 | low | 3 | 0.756 | 1.00 | 1.00 | 0.78 | 0.33 | 0.33 | 1.00 | 26,901 | $0.37 | 384s | 0.689 / 1.000 / 0.578 |
 | claude 2.1.241 | 0.22.2/0.1.0@28728fea0e2f | claude-opus-5 | low | 1 | 0.745 | 1.00 | 1.00 | 0.89 | 0.00 | 0.00 | 0.00 | 7,054 | $1.08 | 288s | 0.745 |
 | claude 2.1.220 | 0.10.0/0.1.0@8b7526eb5988 | claude-sonnet-5 | medium | 1 | 0.745 | 1.00 | 1.00 | 0.89 | 0.00 | 0.00 | 0.00 | 29,937 | $1.54 | 452s | 0.745 |
 
@@ -126,6 +135,8 @@ Generated from the committed submissions by `python -m nurb_evals.report --write
 | grok 1.0.5 | 0.22.2/0.1.0@cb94fa2b8578 | grok-4.6 | high | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 205,177 | $0.19 | 305s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.4 | 0.19.2/0.1.0@7ef9696be198 | grok-4.6 | high | 1 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 59,350 | $0.06 | 266s | 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@cb94fa2b8578 | grok-4.6 | low | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 72,660 | $0.05 | 86s | 1.000 / 1.000 / 1.000 |
+| grok 1.0.5 | 0.23.0/0.1.0@6817426c8779 | grok-4.6 | low | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 83,705 | $0.06 | 84s | 1.000 / 1.000 / 1.000 |
+| grok 1.0.5 | 0.23.0/0.1.0@6817426c8779 | grok-4.6 | medium | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 191,560 | $0.15 | 257s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@cb94fa2b8578 | grok-4.6 | medium | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 124,979 | $0.12 | 211s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@cb94fa2b8578 | grok-4.6 | xhigh | 6 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 178,784 | $0.18 | 395s | 1.000 / 1.000 / 1.000 / 1.000 / 1.000 / 1.000 |
 | codex 0.149.0 | 0.22.2/0.1.0@cb94fa2b8578 | gpt-5.6-luna | xhigh | 5 | 0.980 | 1.00 | 1.00 | 0.96 | 1.00 | 0.80 | 1.00 | 267,347 | $0.06 | 126s | 0.900 / 1.000 / 1.000 / 1.000 / 1.000 |
@@ -134,6 +145,7 @@ Generated from the committed submissions by `python -m nurb_evals.report --write
 | claude 2.1.241 | 0.22.2/0.1.0@cb94fa2b8578 | claude-opus-5 | medium | 3 | 0.922 | 1.00 | 1.00 | 0.98 | 0.67 | 0.67 | 1.00 | 11,214 | $1.20 | 368s | 1.000 / 0.767 / 1.000 |
 | codex 0.149.1 | 0.22.2/0.1.0@cb94fa2b8578 | gpt-5.6-terra | low | 3 | 0.878 | 1.00 | 1.00 | 0.89 | 0.67 | 0.67 | 1.00 | 283,117 | $0.60 | 94s | 1.000 / 1.000 / 0.633 |
 | codex 0.149.1 | 0.22.2/0.1.0@cb94fa2b8578 | gpt-5.6-luna | low | 3 | 0.844 | 1.00 | 1.00 | 0.82 | 0.67 | 0.67 | 1.00 | 255,368 | $0.05 | 91s | 1.000 / 0.533 / 1.000 |
+| claude 2.1.246 | 0.23.0/0.1.0@6817426c8779 | claude-haiku-4-5 | low | 3 | 0.700 | 1.00 | 1.00 | 0.67 | 0.33 | 0.00 | 0.00 | 22,013 | $0.46 | 339s | 0.900 / 0.533 / 0.667 |
 | claude 2.1.220 | 0.10.0/0.1.0@8bc6d7c6cef1 | claude-haiku-4-5 | high | 1 | 0.500 | 1.00 | 1.00 | 0.40 | 0.00 | 0.00 | 0.00 | 20,562 | $0.24 | 251s | 0.500 |
 
 `benchmark` is nurb/evals@content-revision and separates rows whenever the tool, task, scorer, harness adapter, or locked dependencies change. `score` averages all trials with gate failures as zeros; `built` is the fraction of trials past the gate, and lint/dims/flex average built trials only. A pass is a score of at least 0.99. Stage columns overlap by design: a part wrong at the stated size is wrong at every probed size too, so it loses dims and flex together. `tokens` is input plus output as the harness reports them, and harnesses count differently (claude's input excludes cache reads, codex counts full per-turn context), so compare tokens within a harness only. `cost` is the API-equivalent dollar cost of a trial at list prices, the mean across trials: subscription runs paid no invoice, so this is what the same tokens would have cost through the API. claude rows carry the CLI's own cache-aware figure; other harnesses derive from their token counts and the dated prices.toml, which folds any cached tokens in at the full input rate and so reads slightly high.
@@ -158,6 +170,8 @@ Generated from the committed submissions by `python -m nurb_evals.report --write
 | codex 0.149.1 | 0.22.2/0.1.0@de974b4cb0c3 | gpt-5.6-terra | medium | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 352,222 | $0.75 | 125s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@de974b4cb0c3 | grok-4.6 | high | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 214,450 | $0.22 | 724s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@de974b4cb0c3 | grok-4.6 | low | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 133,061 | $0.08 | 153s | 1.000 / 1.000 / 1.000 |
+| grok 1.0.5 | 0.23.0/0.1.0@e846eec22871 | grok-4.6 | low | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 150,729 | $0.09 | 175s | 1.000 / 1.000 / 1.000 |
+| grok 1.0.5 | 0.23.0/0.1.0@e846eec22871 | grok-4.6 | medium | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 228,820 | $0.16 | 404s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@de974b4cb0c3 | grok-4.6 | medium | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 209,061 | $0.20 | 498s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@de974b4cb0c3 | grok-4.6 | xhigh | 6 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 374,604 | $0.30 | 825s | 1.000 / 1.000 / 1.000 / 1.000 / 1.000 / 1.000 |
 | codex 0.149.0 | 0.22.2/0.1.0@de974b4cb0c3 | gpt-5.6-luna | high | 5 | 0.980 | 1.00 | 1.00 | 1.00 | 0.90 | 0.80 | 1.00 | 692,494 | $0.15 | 303s | 1.000 / 1.000 / 1.000 / 0.900 / 1.000 |
@@ -166,6 +180,7 @@ Generated from the committed submissions by `python -m nurb_evals.report --write
 | claude 2.1.241 | 0.22.2/0.1.0@d2dc4e75efc7 | claude-sonnet-5 | low | 3 | 0.831 | 1.00 | 1.00 | 0.79 | 0.67 | 0.67 | 1.00 | 31,597 | $1.02 | 541s | 0.492 / 1.000 / 1.000 |
 | codex 0.149.0 | 0.22.2/0.1.0@de974b4cb0c3 | gpt-5.6-terra | medium | 5 | 0.828 | 1.00 | 1.00 | 0.82 | 0.60 | 0.60 | 1.00 | 377,965 | $0.83 | 200s | 1.000 / 1.000 / 0.569 / 0.569 / 1.000 |
 | codex 0.149.1 | 0.22.2/0.1.0@de974b4cb0c3 | gpt-5.6-luna | low | 3 | 0.628 | 1.00 | 1.00 | 0.59 | 0.17 | 0.00 | 0.00 | 647,325 | $0.14 | 251s | 0.492 / 0.492 / 0.900 |
+| claude 2.1.246 | 0.23.0/0.1.0@e846eec22871 | claude-haiku-4-5 | low | 3 | 0.480 | 1.00 | 0.92 | 0.41 | 0.00 | 0.00 | 0.00 | 31,547 | $0.54 | 465s | 0.454 / 0.569 / 0.417 |
 | claude 2.1.241 | 0.22.2/0.1.0@d2dc4e75efc7 | claude-haiku-4-5 | high | 3 | 0.467 | 1.00 | 1.00 | 0.33 | 0.00 | 0.00 | 0.00 | 44,091 | $0.70 | 722s | 0.492 / 0.492 / 0.415 |
 | claude 2.1.241 | 0.22.2/0.1.0@d2dc4e75efc7 | claude-haiku-4-5 | low | 3 | 0.454 | 1.00 | 0.92 | 0.36 | 0.00 | 0.00 | 0.00 | 32,209 | $0.52 | 513s | 0.417 / 0.492 / 0.454 |
 
@@ -181,6 +196,7 @@ Generated from the committed submissions by `python -m nurb_evals.report --write
 | claude 2.1.241 | 0.22.2/0.1.0@2498e1db7385 | claude-sonnet-5 | medium | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 23,735 | $0.67 | 373s | 1.000 / 1.000 / 1.000 |
 | claude 2.1.241 | 0.22.2/0.1.0@2498e1db7385 | claude-sonnet-5 | xhigh | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 61,697 | $1.67 | 867s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@64ee1d278c28 | grok-4.6 | low | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 115,425 | $0.08 | 167s | 1.000 / 1.000 / 1.000 |
+| grok 1.0.5 | 0.23.0/0.1.0@44684a92b4f0 | grok-4.6 | low | 3 | 1.000 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 157,240 | $0.08 | 146s | 1.000 / 1.000 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@64ee1d278c28 | grok-4.6 | xhigh | 6 | 0.946 | 1.00 | 1.00 | 0.96 | 0.83 | 0.83 | 1.00 | 493,842 | $0.32 | 849s | 0.675 / 1.000 / 1.000 / 1.000 / 1.000 / 1.000 |
 | codex 0.149.0 | 0.22.2/0.1.0@64ee1d278c28 | gpt-5.6-luna | high | 5 | 0.941 | 1.00 | 1.00 | 0.96 | 0.80 | 0.80 | 1.00 | 277,562 | $0.06 | 165s | 1.000 / 1.000 / 1.000 / 1.000 / 0.706 |
 | codex 0.149.0 | 0.22.2/0.1.0@64ee1d278c28 | gpt-5.6-luna | xhigh | 5 | 0.941 | 1.00 | 1.00 | 0.96 | 0.80 | 0.80 | 1.00 | 591,209 | $0.13 | 287s | 0.706 / 1.000 / 1.000 / 1.000 / 1.000 |
@@ -188,6 +204,7 @@ Generated from the committed submissions by `python -m nurb_evals.report --write
 | claude 2.1.241 | 0.22.2/0.1.0@64ee1d278c28 | claude-fable-5 | high | 4 | 0.919 | 1.00 | 1.00 | 0.94 | 0.75 | 0.75 | 1.00 | 23,188 | $3.23 | 421s | 0.675 / 1.000 / 1.000 / 1.000 |
 | claude 2.1.241 | 0.22.2/0.1.0@64ee1d278c28 | claude-opus-5 | high | 3 | 0.902 | 1.00 | 1.00 | 0.94 | 0.67 | 0.67 | 1.00 | 44,316 | $2.78 | 731s | 1.000 / 0.706 / 1.000 |
 | codex 0.149.1 | 0.22.2/0.1.0@64ee1d278c28 | gpt-5.6-sol | low | 3 | 0.902 | 1.00 | 1.00 | 0.94 | 0.67 | 0.67 | 1.00 | 384,142 | $1.60 | 124s | 0.706 / 1.000 / 1.000 |
+| grok 1.0.5 | 0.23.0/0.1.0@44684a92b4f0 | grok-4.6 | medium | 3 | 0.902 | 1.00 | 1.00 | 0.94 | 0.67 | 0.67 | 1.00 | 114,044 | $0.14 | 467s | 0.706 / 1.000 / 1.000 |
 | claude 2.1.241 | 0.22.2/0.1.0@2498e1db7385 | claude-sonnet-5 | low | 3 | 0.892 | 1.00 | 1.00 | 0.92 | 0.67 | 0.67 | 1.00 | 14,922 | $0.46 | 258s | 1.000 / 1.000 / 0.675 |
 | codex 0.149.1 | 0.22.2/0.1.0@64ee1d278c28 | gpt-5.6-terra | low | 3 | 0.892 | 1.00 | 1.00 | 0.92 | 0.67 | 0.67 | 1.00 | 369,360 | $0.78 | 140s | 1.000 / 0.675 / 1.000 |
 | grok 1.0.5 | 0.22.2/0.1.0@64ee1d278c28 | grok-4.6 | high | 3 | 0.892 | 1.00 | 1.00 | 0.92 | 0.67 | 0.67 | 1.00 | 327,177 | $0.31 | 734s | 1.000 / 1.000 / 0.675 |
@@ -196,6 +213,7 @@ Generated from the committed submissions by `python -m nurb_evals.report --write
 | codex 0.149.1 | 0.22.2/0.1.0@64ee1d278c28 | gpt-5.6-luna | low | 3 | 0.804 | 1.00 | 1.00 | 0.88 | 0.33 | 0.33 | 1.00 | 284,379 | $0.06 | 102s | 1.000 / 0.706 / 0.706 |
 | grok 1.0.5 | 0.22.2/0.1.0@64ee1d278c28 | grok-4.6 | medium | 3 | 0.794 | 1.00 | 1.00 | 0.85 | 0.33 | 0.33 | 1.00 | 205,550 | $0.17 | 505s | 1.000 / 0.675 / 0.706 |
 | codex 0.149.1 | 0.22.2/0.1.0@64ee1d278c28 | gpt-5.6-luna | medium | 3 | 0.706 | 1.00 | 1.00 | 0.81 | 0.00 | 0.00 | 0.00 | 278,038 | $0.06 | 99s | 0.706 / 0.706 / 0.706 |
+| claude 2.1.246 | 0.23.0/0.1.0@44684a92b4f0 | claude-haiku-4-5 | low | 3 | 0.685 | 1.00 | 1.00 | 0.77 | 0.00 | 0.00 | 0.00 | 31,186 | $0.49 | 471s | 0.644 / 0.706 / 0.706 |
 | codex 0.149.0 | 0.22.2/0.1.0@64ee1d278c28 | gpt-5.6-terra | high | 5 | 0.681 | 1.00 | 1.00 | 0.76 | 0.00 | 0.00 | 0.00 | 513,731 | $1.11 | 227s | 0.675 / 0.675 / 0.706 / 0.675 / 0.675 |
 | claude 2.1.241 | 0.22.2/0.1.0@64ee1d278c28 | claude-opus-5 | medium | 3 | 0.675 | 1.00 | 1.00 | 0.75 | 0.00 | 0.00 | 0.00 | 17,602 | $1.48 | 362s | 0.675 / 0.675 / 0.675 |
 | codex 0.149.1 | 0.22.2/0.1.0@64ee1d278c28 | gpt-5.6-terra | medium | 3 | 0.675 | 1.00 | 1.00 | 0.75 | 0.00 | 0.00 | 0.00 | 357,181 | $0.78 | 162s | 0.675 / 0.675 / 0.675 |
