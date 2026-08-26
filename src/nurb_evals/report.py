@@ -11,6 +11,7 @@ import argparse
 import json
 import math
 import pathlib
+import re
 import sys
 
 from . import pricing
@@ -18,6 +19,12 @@ from . import pricing
 # A pass is a near-perfect part: every stated dimension, no lint findings, honest
 # parameters. Matches the fairness suite's bar for the reference solution.
 PASS = 0.99
+
+# A dated snapshot is the same model as the plain name it serves, so
+# claude-haiku-4-5-20251001 pools with claude-haiku-4-5 instead of splitting the row.
+# Stripping the date keeps the guard it was added for: an alias that served two
+# different models still resolves to two different names and still splits.
+DATED = re.compile(r"-\d{8}$")
 
 # Models pulled from the board. Their submissions stay committed as the audit
 # trail, but no report, benchmarks page, or wizard run touches them again.
@@ -76,6 +83,12 @@ def harness_version(row):
     return version.split(" [")[0].strip() if version else version
 
 
+def resolved_models(row):
+    """The models that served a trial, with dated snapshots folded into their name."""
+    served = (row.get("usage") or {}).get("models") or ()
+    return tuple(sorted({DATED.sub("", name) for name in served}))
+
+
 def summarize(rows):
     prices = pricing.load()
     groups = {}
@@ -88,7 +101,7 @@ def summarize(rows):
             row["task"], row["harness"], harness_version(row),
             row["nurb_version"], row["benchmark_version"], row["benchmark_revision"],
             row["model"], row["effort"],
-            tuple((row.get("usage") or {}).get("models") or ()),
+            resolved_models(row),
         )
         groups.setdefault(key, []).append(row)
 

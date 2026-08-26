@@ -26,6 +26,31 @@ def _row(score, *, built=True, lint=1.0, dims=1.0, flex=1.0, trial=1, seed=13,
     return row
 
 
+def _served(row, *models):
+    row["usage"]["models"] = list(models)
+    return row
+
+
+def test_a_dated_snapshot_pools_with_the_plain_model_name():
+    # The alias and the snapshot it served are the same model, so one run naming
+    # claude-haiku-4-5-20251001 must not become a second row on the board.
+    rows = [
+        _served(_row(1.0, trial=1), "claude-haiku-4-5"),
+        _served(_row(0.0, trial=2), "claude-haiku-4-5", "claude-haiku-4-5-20251001"),
+    ]
+    (summary,) = report.summarize(rows)
+    assert summary["trials"] == 2
+    assert summary["resolved"] == ["claude-haiku-4-5"]
+
+
+def test_an_alias_that_served_two_models_still_splits():
+    rows = [
+        _served(_row(1.0, trial=1, model="opus"), "claude-opus-5"),
+        _served(_row(1.0, trial=2, model="opus"), "claude-opus-4-8"),
+    ]
+    assert len(report.summarize(rows)) == 2, "a real model change still separates rows"
+
+
 def test_pass_at_k_is_the_unbiased_estimator():
     assert report.pass_at(1, 3, 3) == 1.0
     assert report.pass_at(1, 3, 1) == pytest.approx(1 / 3)
