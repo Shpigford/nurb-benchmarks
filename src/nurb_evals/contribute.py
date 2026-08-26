@@ -67,18 +67,22 @@ def board_counts(root=None):
 
 
 def most_needed(book, counts, installed):
-    """The menu entry the leaderboard needs most: fewest pooled trials at the
-    entry's default effort, among the harnesses on this machine. Ties fall to
-    menu order, which lists flagships first. Returns (harness, entry, count),
-    or None when nothing installed has a menu."""
+    """The catalog combo the leaderboard needs most: fewest pooled trials
+    across every (harness, model, effort) this machine can run. Default
+    effort is a menu convenience, not a filter, so a thin non-default row
+    outranks a thicker default. Ties fall to menu order (flagships first),
+    then the entry's listed effort order. Returns (harness, entry, effort,
+    count), or None when nothing installed has a menu."""
     best = None
     for name in installed:
         for position, entry in enumerate(book.get(name, [])):
-            count = counts.get((name, entry["id"], entry["default_effort"]), 0)
-            rank = (count, position)
-            if best is None or rank < best[0]:
-                best = (rank, name, entry)
-    return (best[1], best[2], best[0][0]) if best else None
+            efforts = entry.get("efforts") or [entry["default_effort"]]
+            for effort_i, effort in enumerate(efforts):
+                count = counts.get((name, entry["id"], effort), 0)
+                rank = (count, position, effort_i)
+                if best is None or rank < best[0]:
+                    best = (rank, name, entry, effort)
+    return (best[1], best[2], best[3], best[0][0]) if best else None
 
 
 def runs_note(count):
@@ -267,6 +271,7 @@ def main():
           + style("———————————————————————————", DIM))
     counts = board_counts()
     picked = None  # a most-needed pick answers harness, model, and effort at once
+    picked_effort = None
     if args.harness:
         name = args.harness
     else:
@@ -280,18 +285,18 @@ def main():
         needed = most_needed(catalog(), counts, [n for n, _ in have])
         options = [(n, f"{style(n, BOLD)} {style(f'({v})', DIM)}") for n, v in have]
         if needed:
-            nname, nentry, ncount = needed
+            nname, nentry, neffort, ncount = needed
             options.insert(0, ("needed", (
                 f"whatever helps the board most: "
                 f"{style(f'{nentry['label']} on {nname}', GREEN, BOLD)} "
-                f"at {nentry['default_effort']} effort {style(f'({runs_note(ncount)})', DIM)}"
+                f"at {neffort} effort {style(f'({runs_note(ncount)})', DIM)}"
             )))
         name = ask(
             "Which AI do you want to benchmark", options,
             default="needed" if needed else (have[0][0] if len(have) == 1 else None),
         )
         if name == "needed":
-            name, picked = nname, nentry
+            name, picked, picked_effort = nname, nentry, neffort
     if not shutil.which(name):
         sys.exit(f"{name} is not on PATH on this machine.")
 
@@ -308,7 +313,7 @@ def main():
         if entry:
             efforts, default_effort = entry["efforts"], entry["default_effort"]
     elif picked:
-        model, efforts, default_effort = picked["id"], picked["efforts"], picked["default_effort"]
+        model, efforts, default_effort = picked["id"], picked["efforts"], picked_effort
     else:
         def label(m):
             total = sum(v for (h, i, _), v in counts.items() if (h, i) == (name, m["id"]))
