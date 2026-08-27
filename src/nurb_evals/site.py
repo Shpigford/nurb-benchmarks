@@ -464,7 +464,11 @@ def _combos(summary):
     Ordered by first-try rate, because that is the number the board leads with and
     what the page tells the reader the ranking means. Mean score breaks ties, so two
     models that print the same fraction of parts first time are separated by how
-    close the misses came. The resolved ids ride along in the key so two same-label
+    close the misses came. Time per part breaks the rest: several rows print every
+    part first time and score a flat 1.0, and without a third key their order fell
+    out of the submission directory names, which handed the top of the board to
+    whichever effort label sorted first alphabetically. The cards already choose
+    among flawless rows by speed, so the board now agrees with them. The resolved ids ride along in the key so two same-label
     groups (a floating alias that served different models) never silently overwrite
     each other."""
     combos = {}
@@ -478,10 +482,10 @@ def _combos(summary):
     }
     order = []
     for key, tasks in combos.items():
-        firsts, total, _, _, _ = _stats(tasks)
+        firsts, total, minutes, _, _ = _stats(tasks)
         mean = sum(r["score"] for r in tasks.values()) / len(tasks)
-        order.append(((firsts / total if total else 0.0, mean), key, tasks))
-    order.sort(key=lambda item: (-item[0][0], -item[0][1]))
+        order.append(((firsts / total if total else 0.0, mean, minutes), key, tasks))
+    order.sort(key=lambda item: (-item[0][0], -item[0][1], item[0][2]))
     return [(key, tasks) for _, key, tasks in order]
 
 
