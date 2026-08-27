@@ -1,0 +1,15 @@
+[leg_width]
+value = 22.0
+unit = "mm"
+how = "calipers across the short leg, 2026-08-02"
+
+[leg_depth]
+value = 18.5
+unit = "mm"
+how = "calipers along the short leg, 2026-08-02"
+
+[lift]
+value = 3.5
+unit = "mm"
+how = "not measured: the bench is at the shop and nobody is there tonight. The shim that fell out brackets it between 2.0 and 5.0; midpoint taken so the worst case either way is 1.5. Measure the short leg's gap with feeler gauges or the shim and correct this."
+provisional = true
