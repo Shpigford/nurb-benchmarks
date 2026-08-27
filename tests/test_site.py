@@ -174,3 +174,19 @@ def test_no_two_labels_land_on_top_of_each_other():
         if a is not b and abs(by - ay) < site._LABEL_ROW and alo - 7 < bx < ahi + 7
     ]
     assert not buried, f"labels sitting on someone else's dot: {buried}"
+
+
+def test_flawless_rows_are_ranked_by_speed_not_by_effort_name():
+    """Several rows print every part first time and score a flat 1.0, so rate and
+    mean cannot separate them. Without a third key their order fell out of the
+    submission directory names and the top of the board went to whichever effort
+    label sorted first alphabetically: 'high' beat 'medium' on spelling while
+    taking twice as long for the same sweep. The cards already choose among
+    flawless rows by speed, and the board has to agree with them."""
+    slow = [_row(task, 1.0, effort="high", wall=600.0) for task in site.JOBS]
+    fast = [_row(task, 1.0, effort="medium", wall=100.0) for task in site.JOBS]
+
+    combos = site._combos(report.summarize(slow + fast))
+    efforts = [key[2] for key, _ in combos]
+
+    assert efforts[:2] == ["medium", "high"], efforts
