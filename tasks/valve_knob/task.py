@@ -144,11 +144,64 @@ def _overlap(shape, tool):
     return hit.volume if hit is not None else 0.0
 
 
-def _drive(shape, bb, dims, grow, twist=0.0):
+def _centerline(shape, bb, dims):
+    """Where the part's vertical centerline crosses XY: the bore's own axis.
+
+    The instruction puts the bore "on the part's vertical centerline", which this
+    scorer first read as the bounding box's centre. The two agree only when the
+    outline is symmetric about the bore, and a knob with three lobes, five lobes, or
+    a lever arm is not: the box centre drifts off the axis, the stem gets driven down
+    a line the bore never occupied, and a knob that would spin fine on a real stem
+    reads as a jam. A knob turns about its bore, so the bore is the centerline.
+
+    The bore's round wall is a cylinder in the B-rep, so its axis is exact where a
+    section's centroid is only close: a D-profile's centroid sits off the axis,
+    toward the round side, by more than the clearance the fit check allows. Take the
+    Z-parallel cylindrical face that turns its back on its own axis (a hole, not a
+    lobe), reaches into the column the stem is driven down, and whose radius is
+    nearest the stem's. Nothing like that means there is no bore to find, and the
+    bounding box's centre is at least a defined place to drive from.
+    """
+    box = ((bb.min.X + bb.max.X) / 2, (bb.min.Y + bb.max.Y) / 2)
+    want = dims["shaft"] / 2
+    best = None
+    for face in shape.faces():
+        if face.geom_type != GeomType.CYLINDER:
+            continue
+        try:
+            axis = face.axis_of_rotation
+            radius = float(face.radius)
+            span = face.bounding_box()
+            if abs(abs(axis.direction.Z) - 1.0) > EPS:
+                continue
+            if span.max.Z < bb.max.Z - ENGAGE or span.min.Z > bb.max.Z:
+                continue
+            if not _is_bore_wall(face, axis):
+                continue
+        except Exception:
+            # A patch OCCT will not describe as a plain cylinder is not the bore.
+            continue
+        miss = abs(radius - want)
+        if best is None or miss < best[0]:
+            best = (miss, axis.position.X, axis.position.Y)
+    return box if best is None else (best[1], best[2])
+
+
+def _is_bore_wall(face, axis):
+    """True when the material sits outside the cylinder: a bore, not a lobe. A face
+    points away from its own solid, so a hole's wall points back at its axis."""
+    point = face.center()
+    reach_x, reach_y = point.X - axis.position.X, point.Y - axis.position.Y
+    if math.hypot(reach_x, reach_y) < EPS:
+        return False
+    out = face.normal_at(point)
+    return out.X * reach_x + out.Y * reach_y < 0
+
+
+def _drive(shape, bb, center, dims, grow, twist=0.0):
     """Overlap between the part and the grown, optionally twisted stem, driven down
     the centerline to ENGAGE below the top face, entering from above the part."""
-    cx = (bb.min.X + bb.max.X) / 2
-    cy = (bb.min.Y + bb.max.Y) / 2
+    cx, cy = center
     height = ENGAGE + 2.0
     tool = (
         Pos(cx, cy, bb.max.Z - ENGAGE + height / 2)
@@ -161,13 +214,15 @@ def _drive(shape, bb, dims, grow, twist=0.0):
         return None
 
 
-def _grip(shape, bb):
+def _grip(shape, bb, center):
     """(narrowest across, widest over narrowest) of the outer profile at half
     height, from a meshed section: the outer ring's nearest and farthest points from
-    the centerline."""
+    the centerline, which is the bore's axis and not the bounding box's centre. A
+    hand turns the knob about the stem, so reach is only reach when it is measured
+    from there; off the axis, a lobed outline reads narrower on one side than the
+    part ever is in use."""
     mesh = builder.to_mesh(shape, tolerance=0.05)
-    cx = (bb.min.X + bb.max.X) / 2
-    cy = (bb.min.Y + bb.max.Y) / 2
+    cx, cy = center
     z = (bb.min.Z + bb.max.Z) / 2 + 0.013  # off any face plane
     paths = mesh.section_multiplane([0, 0, z], [0, 0, 1], [0.0])
     if not paths or paths[0] is None:
@@ -190,6 +245,7 @@ def misfits(shape, dims):
     problems = []
     total = 0
     bb = shape.bounding_box()
+    center = _centerline(shape, bb, dims)
 
     total += 1
     if bb.size.Z < MIN_H - TOL:
@@ -207,7 +263,7 @@ def misfits(shape, dims):
         problems.append((f"only {bed:.0f} mm2 of flat bottom on the bed, need {MIN_BED:.0f}", 1))
 
     total += 3
-    fit = _drive(shape, bb, dims, CLEAR)
+    fit = _drive(shape, bb, center, dims, CLEAR)
     if fit is None or fit > TOL:
         problems.append(
             (
@@ -218,14 +274,14 @@ def misfits(shape, dims):
         )
 
     total += 2
-    slop = _drive(shape, bb, dims, SLOP)
+    slop = _drive(shape, bb, center, dims, SLOP)
     if slop is not None and slop < JAM:
         problems.append(
             (f"the bore rattles: even the {SLOP}-grown stem passes clean through", 2)
         )
 
     total += 3
-    jams = [_drive(shape, bb, dims, CLEAR, twist=sign * TWIST) for sign in (1, -1)]
+    jams = [_drive(shape, bb, center, dims, CLEAR, twist=sign * TWIST) for sign in (1, -1)]
     if any(jam is not None and jam < JAM for jam in jams):
         problems.append(
             (
@@ -235,7 +291,7 @@ def misfits(shape, dims):
             )
         )
 
-    across, lobe = _grip(shape, bb)
+    across, lobe = _grip(shape, bb, center)
     total += 1
     if across < GRIP_MIN - TOL:
         problems.append(

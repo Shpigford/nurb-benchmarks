@@ -21,3 +21,11 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/nurb_evals"]
+
+[tool.pytest.ini_options]
+# Submitted projects carry whatever files the model wrote, and some models write a
+# parts/test_part.py. Two of them collide on that basename, so a bare pytest run
+# aborts at collection trying to import both as the module test_part. They are graded
+# artifacts rather than tests, and the suite reads them by globbing submissions/, so
+# collection has no business walking in there at all.
+testpaths = ["tests"]
