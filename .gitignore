@@ -1,3 +1,8 @@
 # Local run output. Rows meant for the leaderboard get copied into a submission PR
 # deliberately, never committed wholesale from here.
 results/
+
+# Bytecode caches. These were committed at the repo split; nothing reads them
+# from git, and every test run rewrites them into the working tree.
+__pycache__/
+*.pyc
