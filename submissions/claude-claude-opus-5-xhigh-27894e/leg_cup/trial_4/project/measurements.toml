@@ -1,0 +1,15 @@
+[leg_width]
+value = 22.0
+unit = "mm"
+how = "calipers across the short leg, 2026-08-02"
+
+[leg_depth]
+value = 18.5
+unit = "mm"
+how = "calipers along the short leg, 2026-08-02"
+
+[lift]
+value = 3.5
+unit = "mm"
+how = "guess: the shim that fell out from under the short leg read somewhere between 2.0 and 5.0mm, and the bench is at the shop with nobody there tonight to caliper the gap. 3.5 is the middle of that range."
+provisional = true
