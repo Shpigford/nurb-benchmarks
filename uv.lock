@@ -379,7 +379,7 @@ wheels = [
 
 [[package]]
 name = "nurb"
-version = "0.23.0"
+version = "0.24.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "build123d" },
@@ -387,9 +387,9 @@ dependencies = [
     { name = "watchdog" },
     { name = "websockets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/60/f0/2b9058daed144032fba40eae501d5c83b741e108ac3c4ae881fb9069fa53/nurb-0.23.0.tar.gz", hash = "sha256:c0ee165a51fc255c446a66bee24b358eadc9aa5742bdc4922a5d6af795b5ee8e", size = 528966, upload-time = "2026-08-26T00:11:53.191Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/cb/13/93b4fb6777b7cc50a6463ee4f20f0946c186edd782bc34e6027a511f019c/nurb-0.24.0.tar.gz", hash = "sha256:bdb5c4ba6581240bcb1a1212e4550735190c1484ea4e47161e2c007c18155ced", size = 530454, upload-time = "2026-08-29T16:07:22.553Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/96/da/e03ce7b32d7b50e6bdbbb57c8247c958b86568408dc1c9da562cec1bb88a/nurb-0.23.0-py3-none-any.whl", hash = "sha256:e38a7de77fac970cd0726f94aa4323fde00ac4982e527b7ed6ff5caaf2651ee2", size = 545784, upload-time = "2026-08-26T00:11:51.643Z" },
+    { url = "https://files.pythonhosted.org/packages/b3/e8/dae22126e5a9e19407c03d775fd0b5dedd80c334ab2ed1a506a67e87b31e/nurb-0.24.0-py3-none-any.whl", hash = "sha256:ad0d5ef2064cdb33786658f841e12bc19144291e73edcfb81828cbfd6275e06d", size = 547226, upload-time = "2026-08-29T16:07:21.288Z" },
 ]
 
 [[package]]
