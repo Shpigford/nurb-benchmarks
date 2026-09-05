@@ -28,6 +28,8 @@ def test_catalog_offers_real_ids():
     assert {"claude-fable-5", "claude-opus-5", "claude-sonnet-5"} <= claude_ids
     # Floating aliases would pool different models into one leaderboard row.
     assert not claude_ids & {"fable", "opus", "sonnet", "haiku"}
+    codex = next(m for m in book["codex"] if m["id"] == "gpt-6-astra")
+    assert codex["efforts"] == ["low", "medium", "high", "xhigh", "max"]
     for entries in book.values():
         for entry in entries:
             assert entry["default_effort"] in entry["efforts"]
