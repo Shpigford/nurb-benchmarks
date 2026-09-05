@@ -1,0 +1,15 @@
+[leg_width]
+value = 22.0
+unit = "mm"
+how = "calipers across the short leg, 2026-08-02"
+
+[leg_depth]
+value = 18.5
+unit = "mm"
+how = "calipers along the short leg, 2026-08-02"
+
+[lift]
+value = 3.5
+unit = "mm"
+provisional = true
+how = "not measured: nobody at the shop tonight. Bracketed at 2.0 to 5.0 from the shim that fell out from under the short leg; midpoint taken so the error is at most 1.5 either way. Replace with a feeler-gauge or caliper reading of the gap under the short leg with the bench pressed level."
