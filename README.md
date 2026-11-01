@@ -27,7 +27,7 @@ Candidate code never runs in the scorer's process. It builds in an isolated work
 The easy way is the wizard, from anywhere (or paste the line to your AI and let it drive):
 
 ```
-curl -fsSL https://nurb.dev/bench.sh | sh
+curl -fsSL https://nurb.app/bench.sh | sh
 ```
 
 It detects which agent CLIs you have, leads with the combo the leaderboard currently needs most (fewest pooled trials among the menu's models, for the CLIs you actually have), offers the rest of the models from a menu with their run counts so you never guess a spelling, asks how many rounds to run and says why more rounds mean a steadier number, runs them on your subscription three trials at a time (`--parallel` changes that; agent time is unchanged, wall clock divides), sanitizes the artifacts, and then offers to open the pull request itself with the GitHub CLI: branch, commit, push, fork only if you lack push access, PR URL printed. Every run is its own uniquely named directory, branch, and PR, so run it as many times as you like, even concurrently: more runs mean tighter numbers, and matching rows pool on the leaderboard no matter which PR they arrived in. Agents and scripts can skip every question with flags: `uv run python -m nurb_evals.contribute --harness claude --model claude-sonnet-5 --effort medium --pr yes`.
@@ -59,7 +59,7 @@ A submission can be any number of trials, including one: `--trials 1` is a valid
 
 Open a PR that copies your `results/<label>/results.jsonl`, each `<task>/trial_<n>/transcript.txt` gzipped to `transcript.txt.gz` (`gzip -9 -n`, so the bytes are deterministic), and the auditable candidate source into `submissions/<label>/`. The wizard stages exactly this shape for you. Preserve `project/parts/*.py` plus any project-root or package `.py` files they import; leave cards, meshes, renders, and other generated project files out. Replace machine-specific home paths in transcripts and source with `<home>` or `<workspace>`. `results/` itself is gitignored so a submission is always a deliberate copy, never a bulk commit of local runs.
 
-Your PR carries only your run's directory, nothing else: submission PRs are pure additions, which is what lets any number of them, from any number of people or concurrent sessions, merge in any order without a conflict. `REPORT.md` and the page at [nurb.dev/benchmarks](https://nurb.dev/benchmarks.html) are regenerated from the merged submissions when a maintainer publishes the leaderboard, which is also when new runs get their sanity check (the spot-check policy above) and new model combos get their verdict sentences. Your row appearing on the page a few days after your PR merges is that process working, not your submission being lost.
+Your PR carries only your run's directory, nothing else: submission PRs are pure additions, which is what lets any number of them, from any number of people or concurrent sessions, merge in any order without a conflict. `REPORT.md` and the page at [nurb.app/benchmarks](https://nurb.app/benchmarks.html) are regenerated from the merged submissions when a maintainer publishes the leaderboard, which is also when new runs get their sanity check (the spot-check policy above) and new model combos get their verdict sentences. Your row appearing on the page a few days after your PR merges is that process working, not your submission being lost.
 
 Rows land on the leaderboard in one of two tiers:
 
