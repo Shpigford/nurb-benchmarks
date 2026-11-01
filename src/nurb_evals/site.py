@@ -108,11 +108,11 @@ HEAD = """\
 <meta name="description" content="The popular AI models, given the same real part-design jobs, graded by machine against print physics. Pick the one that fits your subscription.">
 <meta property="og:title" content="nurb &middot; which AI designs the best parts?">
 <meta property="og:description" content="The popular AI models, given the same real part-design jobs, graded by machine against print physics. Pick the one that fits your subscription.">
-<meta property="og:url" content="https://nurb.dev/benchmarks.html">
-<meta property="og:image" content="https://nurb.dev/og.png">
+<meta property="og:url" content="https://nurb.app/benchmarks.html">
+<meta property="og:image" content="https://nurb.app/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="vendor/brand/favicon.svg" type="image/svg+xml">
-<!-- Fonts, tokens, header and footer come from the site's shared stylesheet, so this page matches the rest of nurb.dev without carrying its own copy. -->
+<!-- Fonts, tokens, header and footer come from the site's shared stylesheet, so this page matches the rest of nurb.app without carrying its own copy. -->
 <link rel="stylesheet" href="site.css">
 <style>
   /* The chart's SVG names these, so they stay as aliases of the site tokens. */
@@ -306,7 +306,7 @@ HEAD = """\
 <div class="contribute stage">
   <b>Add your model to this page.</b>
   <span>One line, your own subscription, a wizard for the rest. Every run pools with everyone else's.</span>
-  <span class="cmd"><span class="d">$</span><span>curl -fsSL https://nurb.dev/bench.sh | sh</span><button data-copy="curl -fsSL https://nurb.dev/bench.sh | sh" title="Copy the command">Copy</button></span>
+  <span class="cmd"><span class="d">$</span><span>curl -fsSL https://nurb.app/bench.sh | sh</span><button data-copy="curl -fsSL https://nurb.app/bench.sh | sh" title="Copy the command">Copy</button></span>
   <span>Or paste that line to your AI and let it drive.</span>
 </div>
 
